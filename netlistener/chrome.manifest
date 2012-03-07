@@ -1,0 +1,5 @@
+content netlistener  chrome/content/netlistener/
+skin    netlistener  classic/1.0    chrome/skin/classic/
+locale  netlistener  en-US          chrome/locale/en-US/
+
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://netlistener/content/netListener.xul

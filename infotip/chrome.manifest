@@ -1,0 +1,2 @@
+content infotip chrome/content/
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://infotip/content/infoTip.xul

@@ -1,0 +1,2 @@
+content cachelistener  chrome/content/cachelistener/
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://cachelistener/content/cacheListener.xul

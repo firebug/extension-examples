@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <script src="chrome://helloworld/content/helloWorld.js" type="application/x-javascript"/> 
+
+    <commandset id="mainCommandSet">
+        <command id="cmd_hwMyButton" oncommand="Firebug.HelloWorldModel.onMyButton(Firebug.currentContext)"/>
+        <command id="cmd_hwDisableNetMonitoring"
+            oncommand="Firebug.HelloWorldModel.onDisableNetMonitoring(Firebug.currentContext)"/>
+    </commandset>
+
+    <toolbar id="fbToolbar" align="center">
+        <hbox id="fbToolbarInner" insertbefore="fbDetachButton" flex="1" align="center">
+            <hbox id="fbHelloWorldButtons" insertafter="fbNetButtons">
+                <toolbarbutton id="hwMyButton"
+                    label="Say Hello" class="toolbar-text-button"
+                    tooltiptext="Push to say hello" command="cmd_hwMyButton"/>
+            </hbox>
+        </hbox>
+    </toolbar>
+</overlay>

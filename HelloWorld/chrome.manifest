@@ -1,0 +1,2 @@
+content helloworld chrome/content/helloworld/
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://helloworld/content/helloWorld.xul

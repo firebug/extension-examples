@@ -1,0 +1,7 @@
+content  helloamd chrome/content/
+skin     helloamd classic/1.0   chrome/skin/classic/
+locale   helloamd en-US         chrome/locale/en-US/
+
+resource helloamd chrome/
+
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://helloamd/content/mainOverlay.xul

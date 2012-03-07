@@ -1,0 +1,34 @@
+/* See license.txt for terms of usage */
+
+/*************************************************************************************************/
+
+/* Style applied on the panel node. */
+.panelNode-linkInspector {
+    overflow: hidden;
+}
+
+.defaultContent {
+    text-align: center;
+    padding-top: 30px;
+    color: gray;
+}
+
+.linkUrl {
+    text-align: center;
+    padding-top: 30px;
+    color: blue;
+}
+
+.linkPreview {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+/*************************************************************************************************/
+
+/* Firebug Tracing Console customization. All messages from this example use this color.
+   This helps to distinguish logs from those coming from Firebug */
+.DBG_LINKINSPECTOR {
+    color: rgb(0, 101, 114);
+}

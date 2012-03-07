@@ -1,0 +1,26 @@
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>hellobootamd@janodvarko.cz</em:id>
+    <em:version>@VERSION@@RELEASE@</em:version>
+    <em:type>2</em:type>
+    <em:bootstrap>true</em:bootstrap>
+
+    <!-- Target Application this extension can install into, 
+         with minimum and maximum supported versions. --> 
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>10.0</em:minVersion>
+        <em:maxVersion>20.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Front End MetaData -->
+    <em:name>Bootstrapped Firebug 1.10 Extension Example</em:name>
+    <em:description>Example of a Firebug extension that doesn't require browser restart.</em:description>
+    <em:creator>Jan Odvarko</em:creator>
+    <em:homepageURL>http://getfirebug.com</em:homepageURL>
+  </Description>
+</RDF>

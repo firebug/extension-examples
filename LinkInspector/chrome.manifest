@@ -1,0 +1,3 @@
+content linkinspector chrome/content/
+skin    linkinspector classic/1.0   chrome/skin/classic/
+overlay chrome://firebug/content/firebugOverlay.xul         chrome://linkinspector/content/inspector.xul
