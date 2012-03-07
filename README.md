@@ -26,13 +26,16 @@ Related API:
     Firebug.registerExtension("helloamd", config);
 
 TODO:
-    * The tracing listener usage must be updated (see HelloBootAMD).
+
+* The tracing listener usage must be updated (see HelloBootAMD).
 
 Resources:
-    * [Firebug 1.10 Extension Architecture](http://getfirebug.com/wiki/index.php/Firebug_1.10_Extension_Architecture)
+
+* [Firebug 1.10 Extension Architecture](http://getfirebug.com/wiki/index.php/Firebug_1.10_Extension_Architecture)
 
 Requirements:
-    * Firebug 1.10+
+
+* Firebug 1.10+
 
 
 HelloBootAMD
@@ -40,8 +43,6 @@ HelloBootAMD
 Similarly to *HelloAMD* this extension shows how to use AMD and also demonstrates how to
 create bootstrapped (restart-less) extension for Firebug. **This example is recommended to clone
 when starting your own Firebug extension**
-
-
 
 Related API:
 
@@ -53,13 +54,16 @@ Related API:
     firebugFrameUnload(Firebug); // called when Firebug UI is unloaded from an existing browser window 
 
 Resources:
-    * [Firebug 1.10 Extension Architecture](http://getfirebug.com/wiki/index.php/Firebug_1.10_Extension_Architecture)
+
+* [Firebug 1.10 Extension Architecture](http://getfirebug.com/wiki/index.php/Firebug_1.10_Extension_Architecture)
 
 Requirements:
-    * Firebug 1.10+
+
+* Firebug 1.10+
 
 TODO:
-    * Remove the XUL support, which is not used and demonstrated by *HelloAMD* example.
+
+* Remove the XUL support, which is not used and demonstrated by *HelloAMD* example.
 
 
 HelloWorld
@@ -79,13 +83,16 @@ Related API:
     function showInfoTip(infoTip, target, x, y) {};
 
 TODO:
-    * Remove the showInfoTip from Firebug.InfoTab?
+
+* Remove the showInfoTip from Firebug.InfoTab?
 
 Resources:
-    * [Extending Firebug, Infotip (part XI.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-infotip-part-xi/)
+
+* [Extending Firebug, Infotip (part XI.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-infotip-part-xi/)
 
 Requirements:
-    * Firebug 1.7+
+
+* Firebug 1.7+
 
 
 Link Inspector
@@ -104,10 +111,12 @@ Related API:
     Firebug.Inspector.addListener(inspectorListener);
 
 Resources:
-    * [Extending Firebug, Inspector (part X.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-inspector-part-x/)
+
+* [Extending Firebug, Inspector (part X.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-inspector-part-x/)
 
 Requirements:
-    * Firebug 1.7+
+
+* Firebug 1.7+
 
 
 Net Listener
@@ -121,10 +130,12 @@ Related API:
     Firebug.NetMonitor.removeListener();
 
 Resources:
-    * [Extending Firebug, Net panel listener (part VIII.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-net-panel-listener-part-viii/)
+
+* [Extending Firebug, Net panel listener (part VIII.)](http://www.softwareishard.com/blog/firebug-tutorial/extending-firebug-net-panel-listener-part-viii/)
 
 Requirements:
-    * Firebug 1.4+
+
+* Firebug 1.4+
 
 
 SidePanel
@@ -132,7 +143,8 @@ SidePanel
 This example shows how to create a side panel.
 
 Requirements:
-    * Firebug 1.4+
+
+* Firebug 1.4+
 
 
 TabularUI
@@ -144,7 +156,8 @@ Related API:
     FirebugReps.Table;
 
 Requirements:
-    * Firebug 1.10+
+
+* Firebug 1.10+
 
 
 Toolbar
@@ -160,4 +173,5 @@ Related API:
     Firebug.Panel.getPanelToolbarButtons();
 
 Requirements:
-    * Firebug 1.10+
+
+* Firebug 1.10+
