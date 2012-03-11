@@ -3,7 +3,7 @@
 
   <Description about="urn:mozilla:install-manifest">
     <em:id>hellobootamd@janodvarko.cz</em:id>
-    <em:version>@VERSION@@RELEASE@</em:version>
+    <em:version>0.5</em:version>
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
 
