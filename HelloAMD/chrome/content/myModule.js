@@ -1,15 +1,15 @@
 /* See license.txt for terms of usage */
 
 define([
-    "firebug/lib/object",
+    "firebug/lib/lib",
     "firebug/lib/trace",
 ],
-function(Obj, FBTrace) {
+function(FBL, FBTrace) {
 
 // ********************************************************************************************* //
 // Custom Module Implementation
 
-Firebug.MyModule = Obj.extend(Firebug.Module,
+Firebug.MyModule = FBL.extend(Firebug.Module,
 {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Initialization

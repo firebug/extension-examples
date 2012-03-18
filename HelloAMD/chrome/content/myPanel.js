@@ -1,12 +1,10 @@
 /* See license.txt for terms of usage */
 
 define([
-    "firebug/lib/object",
+    "firebug/lib/lib",
     "firebug/lib/trace",
-    "firebug/lib/locale",
-    "firebug/lib/domplate"
 ],
-function(Obj, FBTrace, Locale, Domplate) {
+function(FBL, FBTrace) {
 
 // ********************************************************************************************* //
 // Custom Panel Implementation
@@ -14,7 +12,7 @@ function(Obj, FBTrace, Locale, Domplate) {
 var panelName = "helloamd";
 
 function MyPanel() {}
-MyPanel.prototype = Obj.extend(Firebug.Panel,
+MyPanel.prototype = FBL.extend(Firebug.Panel,
 {
     name: panelName,
     title: "Hello AMD World!",
@@ -71,7 +69,7 @@ Firebug.registerStringBundle("chrome://helloamd/locale/helloamd.properties");
  * localized strings and so, Firebug.registerStringBundle for the appropriate
  * locale file must be already executed at this moment.
  */
-with (Domplate) {
+with (FBL) {
 MyPanel.prototype.MyTemplate = domplate(
 {
     tag:
