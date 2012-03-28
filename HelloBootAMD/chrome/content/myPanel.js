@@ -17,7 +17,7 @@ Firebug.MyPanel = function MyPanel() {};
 Firebug.MyPanel.prototype = Obj.extend(Firebug.Panel,
 {
     name: panelName,
-    title: "Hello AMD World!",
+    title: "Hello Boot AMD!",
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Initialization

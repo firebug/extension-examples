@@ -18,7 +18,7 @@
     </em:targetApplication>
 
     <!-- Front End MetaData -->
-    <em:name>Bootstrapped Firebug 1.10 Extension Example</em:name>
+    <em:name>Hello Boot AMD!</em:name>
     <em:description>Example of a Firebug extension that doesn't require browser restart.</em:description>
     <em:creator>Jan Odvarko</em:creator>
     <em:homepageURL>http://getfirebug.com</em:homepageURL>
