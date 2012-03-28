@@ -33,4 +33,10 @@
 var config = {id: "helloamd@janodvarko.cz"};
 Firebug.registerExtension("helloamd", config);
 
+// Register trace listener the customizes trace logs coming from this extension
+// * helloAMD; is unique prefix of all messages that should be customized.
+// * DBG_HELLOAMD is a class name with style defined in the specified stylesheet.
+Firebug.registerTracePrefix("helloAMD;", "DBG_HELLOAMD", true,
+    "chrome://helloamd/skin/helloamd.css");
+
 // ********************************************************************************************* //

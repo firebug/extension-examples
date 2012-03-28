@@ -22,15 +22,6 @@ var theApp =
 {
     initialize: function()
     {
-        // Register trace customization listener for FBTrace. DBG_HELLOAMD represents a CSS rule
-        // that is automatially associated with all logs prefixed with "helloAMD;".
-        // The prefix is removed (third parameter is true).
-        // The last parameter represents URL of the stylesheet that should be used by
-        // the tracing console.
-        this.traceListener = new TraceListener("helloAMD;", "DBG_HELLOAMD", true,
-            "resource://helloamd/skin/classic/helloamd.css");
-        TraceModule.addListener(this.traceListener);
-
         if (FBTrace.DBG_HELLOAMD)
             FBTrace.sysout("helloAMD; HelloAMD extension initialize");
 
@@ -43,8 +34,6 @@ var theApp =
             FBTrace.sysout("helloAMD; HelloAMD extension shutdown");
 
         // TODO: Extension shutdown
-
-        TraceModule.removeListener(this.traceListener);
     }
 }
 

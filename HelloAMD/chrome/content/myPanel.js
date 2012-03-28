@@ -74,7 +74,7 @@ MyPanel.prototype.MyTemplate = domplate(
 {
     tag:
         SPAN(
-            Locale.$STR("helloamd.panel.label")
+            FBL.$STR("helloamd.panel.label")
         ),
 
     render: function(parentNode)
