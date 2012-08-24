@@ -8,46 +8,71 @@ var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 // ********************************************************************************************* //
 // Constants
 
-// Default preferences for bootstrap extensions are registered dynamically.
-var defaultPrefs =
-{
-    "DBG_HELLOBOOTAMD": true,
-}
+// Extension installation path. Set within startup callback.
+var installPath;
 
 // ********************************************************************************************* //
 // Firefox Bootstrap API
 
 function install(data, reason) {}
 function uninstall(data, reason) {}
-function startup(data, reason) { firebugStartup(); }
-function shutdown(data, reason) { firebugShutdown(); }
+
+function startup(data, reason)
+{
+    // Remember so, we can use later within firebugStartup callback.
+    installPath = data.installPath;
+
+    // Firebug extension start-up callback. Since extension load order isn't guaranteed
+    // the code needs to be ready for two alternatives:
+    // 1) Firebug is already loaded - good, let's just execute firebugStartup() callback
+    // that will ensure proper Firebug related initialization for this extension.
+    // 2) Firebug is not loaded yet - as soon as Firebug is loaded it'll execute this
+    // method automatially.
+    firebugStartup();
+}
+
+function shutdown(data, reason)
+{
+    firebugShutdown();
+}
+
+function isFirebugLoaded()
+{
+    try
+    {
+        // Import Firebug modules into this scope. It fails if Firebug isn't loaded yet.
+        Cu.import("resource://firebug/loader.js");
+        Cu.import("resource://firebug/prefLoader.js");
+
+        return true;
+    }
+    catch (e)
+    {
+    }
+
+    return true;
+}
 
 // ********************************************************************************************* //
 // Firebug Bootstrap API
 
 /**
  * Executed by Firebug framework when Firebug is started. Since the order of Firebug
- * and its bootstrapped extensions is not guaranteed this function is executed twice
- * (of course the registration happens just once):
- *
+ * and its bootstrapped extensions is not guaranteed this function is executed twice.
  * 1) When Firebug is loaded
  * 2) When this extension is loaded
- *
- * If Firebug is not loaded an exception happens
  */
 function firebugStartup()
 {
-    try
-    {
-        Cu.import("resource://firebug/loader.js");
-        FirebugLoader.registerBootstrapScope(this);
-        FirebugLoader.registerDefaultPrefs(defaultPrefs);
-    }
-    catch (e)
-    {
-        // If an exception happens it's probably because Firebug hasn't been
-        // started yet. Just ignore it.
-    }
+    // If Firebu isn't loade just bail out, Firebug will execute this method
+    // as soon as it loads.
+    if (!isFirebugLoaded())
+        return;
+
+    FirebugLoader.registerBootstrapScope(this);
+
+    // Load default preferences
+    PrefLoader.loadDefaultPrefs(installPath, "prefs.js");
 }
 
 /**
@@ -57,7 +82,6 @@ function firebugShutdown()
 {
     try
     {
-        Cu.import("resource://firebug/loader.js");
         FirebugLoader.unregisterBootstrapScope(this);
     }
     catch (e)
