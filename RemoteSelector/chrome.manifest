@@ -1,0 +1,3 @@
+content  remoteselector  chrome/content/
+skin     remoteselector  classic/1.0   chrome/skin/classic/
+locale   remoteselector  en-US         chrome/locale/en-US/

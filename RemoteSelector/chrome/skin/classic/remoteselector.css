@@ -1,0 +1,17 @@
+/* See license.txt for terms of usage */
+
+/*************************************************************************************************/
+
+.panelNode-remoteSelector {
+    overflow: hidden;
+    color: green;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/*************************************************************************************************/
+
+.DBG_REMOTESELECTOR {
+    color: rgb(101, 0, 114);
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<!-- Run ant in the extension's directory and look for: remoteselector-0.5.1.xpi -->
+<project name="remoteselector" basedir="." default="build">
+
+    <!-- Properties -->
+    <property file="ant.properties"/>
+    <property name="build.dir" value="./release"/>
+    <property name="file-name" value="remoteselector-${VERSION}${RELEASE}.xpi"/>
+
+    <!-- Clean -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Build -->
+    <target name="build" depends="clean">
+
+        <!-- Copy extension installation files and licence.txt -->
+        <copy file="bootstrap.js" todir="${build.dir}"/>
+        <copy file="install.rdf" todir="${build.dir}"/>
+        <copy file="license.txt" todir="${build.dir}"/>
+
+        <!-- Copy install.rdf with updated release version info -->
+        <replace file="${build.dir}/install.rdf" propertyFile="ant.properties">
+            <replacefilter token="@VERSION@" property="VERSION"/>
+            <replacefilter token="@RELEASE@" property="RELEASE"/>
+        </replace>
+
+        <!-- Compress files (ZIP) -->
+        <zip destfile="${file-name}" basedir="${build.dir}" update="true" />
+
+        <echo message="RemoteSelector version: ${VERSION}${RELEASE} created!"/>
+    </target>
+
+</project>
