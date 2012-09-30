@@ -14,10 +14,11 @@ FBTrace = FBTrace.to("DBG_REMOTESELECTOR");
 // ********************************************************************************************* //
 // Implementation
 
-function SelectorClient(connection, actor)
+function SelectorClient(connection, actor, threadClient)
 {
     this.connection = connection;
     this.actor = actor;
+    this.threadClient = threadClient;
 }
 
 SelectorClient.prototype =
@@ -29,21 +30,46 @@ SelectorClient.prototype =
 
     querySelectorAll: function(selector, onResponse)
     {
-        var packet = {
-            to: this.actor,
-            type: "querySelectorAll",
-            selector: selector,
+        var self = this;
+        var doQuery = function(callback)
+        {
+            var packet = {
+                to: self.actor,
+                type: "querySelectorAll",
+                selector: selector
+            };
+
+            self.connection.request(packet, function(response)
+            {
+                // Ignoring errors?
+                if (onResponse)
+                {
+                    var result = response.result;
+                    if (callback)
+                        callback(onResponse(result));
+                    else
+                        onResponse(result);
+                }
+            });
         };
 
-        this.connection.request(packet, function(response)
+        if (this.threadClient.isPaused())
         {
-            if (!onResponse)
-                return;
+            doQuery();
+            return;
+        }
 
-            var result = response.result.split(",");
-            onResponse(result);
+        this.threadClient.interrupt(function(response)
+        {
+            if (response.error)
+            {
+                onResponse(response);
+                return;
+            }
+
+            doQuery(self.threadClient.resume.bind(self.threadClient));
         });
-    }
+    },
 };
 
 // ********************************************************************************************* //

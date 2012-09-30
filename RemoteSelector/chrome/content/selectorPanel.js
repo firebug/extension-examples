@@ -56,46 +56,55 @@ SelectorPanel.prototype = Obj.extend(Firebug.Panel,
     {
         FBTrace.sysout("remoteSelector;selectorPanel.onConnect");
 
-        var self = this;
-        proxy.connection.listTabs(function(response)
-        {
-            var tab = response.tabs[response.selected];
-            proxy.connection.attachTab(tab.actor, function(response)
-            {
-                self.onTabAttached(proxy.connection, tab.actor);
-            });
-        });
+        this.tool = this.context.getTool("debugger");
+        this.tool.attach(this.context, proxy.connection, this,
+            this.onThreadAttached.bind(this));
     },
 
     onDisconnect: function(proxy)
     {
         FBTrace.sysout("remoteSelector;selectorPanel.onDisconnect");
 
-        proxy.connection.detachTab(function(response)
-        {
-            FBTrace.sysout("remoteSelector;tab detached");
-        });
-
+        // Detach from the current tool.
+        this.tool.detach(this.context, proxy.connection, this);
         this.selectorClient = null;
     },
 
-    onTabAttached: function(connection, tabActor)
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // DebuggerTool Events
+
+    onThreadAttached: function(threadActor)
     {
         FBTrace.sysout("remoteSelector; selectorModule.onTabAttached", arguments);
 
         var packet = {
-            to: tabActor,
+            to: this.context.debuggerClient.tabActor,
             type: "SelectorActor"
         }
 
+        var conn = this.context.getConnection();
+
         var self = this;
-        connection.request(packet, function(response)
+        conn.request(packet, function(response)
         {
             FBTrace.sysout("remoteSelector; on selector actor received", response);
-            self.selectorClient = new SelectorClient(connection, response.actor);
+            self.selectorClient = new SelectorClient(conn, response.actor,
+                self.context.debuggerClient.activeThread);
         });
     },
 
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    onStartDebugging: function(context, frame)
+    {
+        FBTrace.sysout("selectorPanel.onStartDebugging; ");
+    },
+
+    onStopDebugging: function(context)
+    {
+        FBTrace.sysout("selectorPanel.onStopDebugging;");
+    },
+    
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Panel
 

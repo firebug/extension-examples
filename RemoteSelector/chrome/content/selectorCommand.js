@@ -28,6 +28,7 @@ var SelectorCommand =
         var selector = args.length > 0 ? args[0] : "*";
         client.querySelectorAll(selector, function(result)
         {
+            // xxxHonza: what to do to force Firebug to pick the right template?
             Firebug.Console.log(result);
         });
 
