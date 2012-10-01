@@ -18,8 +18,8 @@
     </em:targetApplication>
 
     <!-- Front End MetaData -->
-    <em:name>Remotable Firebug 1.11 Extension Example</em:name>
-    <em:description>Example of a Firebug extension that does remote debuggin based on JSD2 API.</em:description>
+    <em:name>RemoteSelector</em:name>
+    <em:description>Example of a Firebug extension that does remote debugging based on JSD2 API.</em:description>
     <em:creator>Jan Odvarko</em:creator>
     <em:homepageURL>http://getfirebug.com</em:homepageURL>
   </Description>
