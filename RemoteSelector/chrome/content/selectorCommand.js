@@ -20,8 +20,7 @@ var SelectorCommand =
 
     handler: function(context, args)
     {
-        var panel = context.getPanel("remoteSelector");
-        var client = panel.selectorClient;
+        var client = context.selectorClient;
         if (!client)
             return "Selector client is not available in this context (yet?): " + context.getName();
 

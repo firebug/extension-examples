@@ -1,10 +1,13 @@
 /* See license.txt for terms of usage */
 
 define([
+    "firebug/firebug",
     "firebug/lib/object",
     "firebug/lib/trace",
+    "firebug/remoting/debuggerClientModule",
+    "remoteselector/selectorClient",
 ],
-function(Obj, FBTrace) {
+function(Firebug, Obj, FBTrace, DebuggerClientModule, SelectorClient) {
 
 // ********************************************************************************************* //
 // Constants
@@ -25,78 +28,76 @@ var SelectorModule = Obj.extend(Firebug.Module,
 
         FBTrace.sysout("remoteSelector; SelectorModule.initialize");
 
-        //Firebug.connection.addListener(this);
+        DebuggerClientModule.addListener(this);
     },
 
     shutdown: function()
     {
         Firebug.Module.shutdown.apply(this, arguments);
 
-        //Firebug.connection.removeListener(this);
+        DebuggerClientModule.removeListener(this);
 
         FBTrace.sysout("remoteSelector; SelectorModule.shutdown");
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-    // Connection
+    // DebuggerClientModule Events
 
-    onConnect: function(proxy)
+    onConnect: function(debuggerClient)
     {
-        FBTrace.sysout("remoteSelector; selectorModule.onConnect");
-
-        var self = this;
-        proxy.connection.listTabs(function(response)
-        {
-            var tab = response.tabs[response.selected];
-            self.tabActor = tab.actor;
-
-            proxy.connection.attachTab(self.tabActor, function(response)
-            {
-                self.onTabAttached(proxy.connection);
-            });
-        });
+        FBTrace.sysout("remoteSelector; SelectorModule.onConnect");
     },
 
-    onDisconnect: function(proxy)
+    onDisconnect: function(debuggerClient)
     {
-        FBTrace.sysout("remoteSelector; selectorModule.onDisconnect");
-
-        var self = this;
-        proxy.connection.detachTab(function(response)
-        {
-            FBTrace.sysout("remoteSelector;tab detached");
-        });
-
-        this.tabActor = null;
-        this.selectorActor = null;
+        FBTrace.sysout("remoteSelector; SelectorModule.onDisconnect");
     },
 
-    onTabAttached: function(connection, tabActor)
+    onTabAttached: function(context)
     {
-        FBTrace.sysout("remoteSelector; selectorModule.onTabAttached", arguments);
+        FBTrace.sysout("remoteSelector; SelectorModule.onTabAttached; " + context.getName());
+    },
+
+    onTabDetached: function()
+    {
+        FBTrace.sysout("remoteSelector; SelectorModule.onTabDetached;");
+    },
+
+    onTabNavigated: function()
+    {
+        FBTrace.sysout("remoteSelector; SelectorModule.onTabNavigated;");
+    },
+
+    onThreadAttached: function(context)
+    {
+        FBTrace.sysout("remoteSelector; SelectorModule.onThreadAttached; " + context.getName());
 
         var packet = {
-            to: this.tabActor,
+            to: context.tabClient._actor,
             type: "SelectorActor"
         }
 
-        var self = this;
-        connection.request(packet, function(response)
+        // DebuggerClient is globaly accessible. This object represents the connection
+        // to the server.
+        var client = Firebug.debuggerClient;
+        client.request(packet, function(response)
         {
-            FBTrace.sysout("remoteSelector; on selector actor received", response);
-            self.selectorActor = response.actor;
+            FBTrace.sysout("remoteSelector; on selector actor received; " +
+                context.getName(), response);
+
+            // The selector is thread dependent so, store it into the context.
+            // There is one thread and one context per browser tab.
+            context.selectorClient = new SelectorClient(client, response.actor,
+                context.activeThread);
         });
     },
 
-    onTabDetached: function(tab)
+    onThreadDetached: function(context)
     {
-        // TODO
-    },
+        FBTrace.sysout("remoteSelector; SelectorModule.onThreadDetached; " + context.getName());
 
-    onTabNavigated: function(tab)
-    {
-        // TODO
-    },
+        delete context.selectorClient;
+    }
 });
 
 // ********************************************************************************************* //
