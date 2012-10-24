@@ -38,6 +38,8 @@
         <!-- Compress files (ZIP) -->
         <zip destfile="${file-name}" basedir="${build.dir}" update="true" />
 
+        <delete dir="${build.dir}"/>
+
         <echo message="HelloBootAMD version: ${VERSION}${RELEASE} created!"/>
     </target>
 
