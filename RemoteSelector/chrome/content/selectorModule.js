@@ -55,7 +55,8 @@ var SelectorModule = Obj.extend(Firebug.Module,
 
     onTabAttached: function(context)
     {
-        FBTrace.sysout("remoteSelector; SelectorModule.onTabAttached; " + context.getName());
+        FBTrace.sysout("remoteSelector; SelectorModule.onTabAttached; " +
+            context.getName(), context);
     },
 
     onTabDetached: function()
@@ -70,26 +71,15 @@ var SelectorModule = Obj.extend(Firebug.Module,
 
     onThreadAttached: function(context)
     {
-        FBTrace.sysout("remoteSelector; SelectorModule.onThreadAttached; " + context.getName());
-
-        var packet = {
-            to: context.tabClient._actor,
-            type: "SelectorActor"
-        }
-
-        // DebuggerClient is globaly accessible. This object represents the connection
-        // to the server.
         var client = Firebug.debuggerClient;
-        client.request(packet, function(response)
-        {
-            FBTrace.sysout("remoteSelector; on selector actor received; " +
-                context.getName(), response);
 
-            // The selector is thread dependent so, store it into the context.
-            // There is one thread and one context per browser tab.
-            context.selectorClient = new SelectorClient(client, response.actor,
-                context.activeThread);
-        });
+        // Create client object for communication with the server actor.
+        var selectorActorId = DebuggerClientModule.getActorId(context, "SelectorActor");
+        context.selectorClient = new SelectorClient(client, selectorActorId,
+            context.activeThread);
+
+        FBTrace.sysout("remoteSelector; SelectorModule.onThreadAttached; " +
+            context.getName() + ", selector actor ID: " + selectorActorId);
     },
 
     onThreadDetached: function(context)
