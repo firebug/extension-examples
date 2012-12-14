@@ -32,10 +32,13 @@ function loadSubScript(aURL)
 
 //Load the debugging server in a sandbox with its own compartment.
 var systemPrincipal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
-
 var DBGServer = Cu.Sandbox(systemPrincipal);
 DBGServer.importFunction(loadSubScript);
-DBGServer.loadSubScript("chrome://global/content/devtools/dbg-script-actors.js");
+try {
+    DBGServer.loadSubScript("chrome://global/content/devtools/dbg-script-actors.js");
+} catch (e) {
+    //xxxHonza: ignore the exception 'Debugger not defined'
+}
 
 // ********************************************************************************************* //
 // Implementation
