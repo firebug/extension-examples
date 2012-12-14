@@ -100,18 +100,7 @@ SelectorActor.prototype.requestTypes =
     "querySelectorAll": SelectorActor.prototype.onQuerySelectorAll
 };
 
-// Bug 792925 - Dynamically-added tab-scoped actors should get a reference to their parent
-// DebuggerServer.addTabActor(SelectorActor, "selectorActor");
-
-// xxxHonza: this is here till the bug 792925 is fixed
-function selectorActorHandler(tab, request)
-{
-    var actor = new SelectorActor(null, tab);
-    tab.tabActorPool.addActor(actor);
-    return actor.grip();
-}
-
-DebuggerServer.addTabRequest("SelectorActor", selectorActorHandler);
+DebuggerServer.addTabActor(SelectorActor, "SelectorActor");
 
 // ********************************************************************************************* //
 // Registration
