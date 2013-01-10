@@ -69,7 +69,7 @@ var SelectorModule = Obj.extend(Firebug.Module,
         FBTrace.sysout("remoteSelector; SelectorModule.onTabNavigated;");
     },
 
-    onThreadAttached: function(context)
+    onThreadAttached: function(context, reload)
     {
         var client = Firebug.debuggerClient;
 

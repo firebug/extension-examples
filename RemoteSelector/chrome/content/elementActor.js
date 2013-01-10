@@ -15,30 +15,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-Cu.import("resource:///modules/devtools/dbg-server.jsm");
-
-//xxxHonza: it should be easier to get the built-in data types.
-function loadSubScript(aURL)
-{
-  try {
-    let loader = Cc["@mozilla.org/moz/jssubscript-loader;1"]
-      .getService(Ci.mozIJSSubScriptLoader);
-    loader.loadSubScript(aURL, this);
-  } catch(e) {
-    dump("Error loading: " + aURL + ": " + e + " - " + e.stack + "\n");
-    throw e;
-  }
-}
-
-//Load the debugging server in a sandbox with its own compartment.
-var systemPrincipal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
-var DBGServer = Cu.Sandbox(systemPrincipal);
-DBGServer.importFunction(loadSubScript);
-try {
-    DBGServer.loadSubScript("chrome://global/content/devtools/dbg-script-actors.js");
-} catch (e) {
-    //xxxHonza: ignore the exception 'Debugger not defined'
-}
+Cu.import("resource://gre/modules/devtools/dbg-server.jsm");
 
 // ********************************************************************************************* //
 // Implementation
@@ -49,7 +26,7 @@ function ElementActor(aObj, aThreadActor)
     this.threadActor = aThreadActor;
 }
 
-ElementActor.prototype = Object.create(DBGServer.ObjectActor.prototype);
+ElementActor.prototype = Object.create(DebuggerServer.ObjectActor.prototype);
 ElementActor.prototype = Obj.extend(ElementActor.prototype,
 {
     constructor: ElementActor,
