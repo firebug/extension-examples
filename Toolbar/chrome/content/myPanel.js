@@ -29,6 +29,7 @@ MyPanel.prototype = FBL.extend(Firebug.Panel,
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Toolbar
 
     /**
      * Extends toolbar for this panel.
@@ -43,7 +44,80 @@ MyPanel.prototype = FBL.extend(Firebug.Panel,
             command: FBL.bindFixed(this.onHello, this)
         });
 
+        buttons.push({
+            type: "menu",
+            label: "toolbar.button.label2",
+            tooltiptext: "toolbar.button.tooltip2",
+            items: this.getMenuButtonItems()
+        });
+
         return buttons;
+    },
+
+    getMenuButtonItems: function()
+    {
+        var items = [];
+
+        items.push({
+            nol10n: true,
+            label: "Item 1",
+            command: FBL.bindFixed(this.onHello, this)
+        });
+
+        items.push({
+            nol10n: true,
+            label: "Item 2",
+            items: this.getSubMenuItems()
+        });
+
+        items.push({
+            nol10n: true,
+            label: "Item 3",
+            command: FBL.bindFixed(this.onHello, this)
+        });
+
+        return items;
+    },
+
+    getSubMenuItems: function()
+    {
+        var items = [];
+
+        items.push({
+            nol10n: true,
+            label: "Item 2-1",
+            command: FBL.bindFixed(this.onHello, this)
+        });
+
+        items.push({
+            nol10n: true,
+            label: "Item 2-2",
+            command: FBL.bindFixed(this.onHello, this)
+        });
+
+        items.push({
+            nol10n: true,
+            label: "Item 2-3",
+            command: FBL.bindFixed(this.onHello, this)
+        });
+
+        return items;
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Options Menu
+
+    getOptionsMenuItems: function()
+    {
+        return this.getMenuButtonItems();
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Context Menu
+
+    getContextMenuItems: function()
+    {
+        return this.getMenuButtonItems();
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
