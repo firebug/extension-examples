@@ -78,6 +78,22 @@ SelectorActor.prototype =
         return {"result": grips};
     },
 
+    onQuerySelector: function(request)
+    {
+        var doc = this.tab.browser.contentDocument;
+        var result = doc.querySelector(request.selector);
+
+        FBTrace.sysout("remoteSelector;SelectorActor.onQuerySelector " +
+            doc.location, result);
+
+        var pool = this.tab.threadActor.threadLifetimePool;
+        var grip = this.elementGrip(result, pool);
+
+        // The "from" attribute is not provided, the protocol handler will
+        // add that for us.
+        return {"result": grip};
+    },
+
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     elementGrip: function TA_objectGrip(aValue, aPool)
@@ -97,7 +113,8 @@ SelectorActor.prototype =
 
 SelectorActor.prototype.requestTypes =
 {
-    "querySelectorAll": SelectorActor.prototype.onQuerySelectorAll
+    "querySelectorAll": SelectorActor.prototype.onQuerySelectorAll,
+    "querySelector": SelectorActor.prototype.onQuerySelector,
 };
 
 DebuggerServer.addTabActor(SelectorActor, "SelectorActor");

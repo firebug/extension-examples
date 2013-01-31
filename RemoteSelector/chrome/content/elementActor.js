@@ -36,10 +36,34 @@ ElementActor.prototype = Obj.extend(ElementActor.prototype,
 
     grip: function()
     {
+        // Collect all information that are needed for FirebugReps.Element template.
+        // This is the basic set that needs to be immediatelly available so, an element
+        // can be properly displayed in Firebug UI.
+        // Consequent asynchronous queries should be done mostly for children or parents
+        // (which will be needed for the HTML panel).
+        var classList = [];
+        if (this.obj.classList.length > 0)
+            classList = this.obj.classList.toString().split(" ");
+
+        var attrs = [];
+        var attributes = this.obj.attributes;
+        for (var i=0; i<attributes.length; i++)
+        {
+            var attr = attributes[i];
+            attrs.push({
+                localName: attr.localName,
+                value: attr.value,
+            });
+        }
+
         return {
             "type": "object",
-            "class": this.obj.tagName,
-            "actor": this.actorID
+            "class": "HTMLElement",
+            "localName": this.obj.tagName.toLowerCase(),
+            "actor": this.actorID,
+            "id": this.obj.id,
+            "classList": classList,
+            "attributes": attrs,
         };
     },
 

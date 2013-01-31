@@ -14,9 +14,9 @@ FBTrace = FBTrace.to("DBG_REMOTESELECTOR");
 // ********************************************************************************************* //
 // Implementation
 
-var SelectorCommand =
+var SelectorCommandAll =
 {
-    description: "Example of a remote command",
+    description: "Example of a remote command: document.querySelectorAll()",
 
     handler: function(context, args)
     {
@@ -27,7 +27,30 @@ var SelectorCommand =
         var selector = args.length > 0 ? args[0] : "*";
         client.querySelectorAll(selector, function(result)
         {
-            // xxxHonza: what to do to force Firebug to pick the right template?
+            // Firebug needs to pick the right template using supportsObject()
+            // JSD2 remote objects doesn't use instanceof, they are based on 'type'
+            // passed into the supportsObject() method. See Firebug.getRep() for more
+            // information about how the 'type' is computed.
+            Firebug.Console.log(result);
+        });
+
+        return Firebug.Console.getDefaultReturnValue(context.window);
+    }
+}
+
+var SelectorCommand =
+{
+    description: "Example of a remote command: document.querySelector()",
+
+    handler: function(context, args)
+    {
+        var client = context.selectorClient;
+        if (!client)
+            return "Selector client is not available in this context (yet?): " + context.getName();
+
+        var selector = args.length > 0 ? args[0] : "*";
+        client.querySelector(selector, function(result)
+        {
             Firebug.Console.log(result);
         });
 
@@ -38,6 +61,7 @@ var SelectorCommand =
 // ********************************************************************************************* //
 // Registration
 
+Firebug.registerCommand("remoteselectall", SelectorCommandAll);
 Firebug.registerCommand("remoteselect", SelectorCommand);
 
 return SelectorCommand;

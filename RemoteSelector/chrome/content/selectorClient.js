@@ -30,12 +30,22 @@ SelectorClient.prototype =
 
     querySelectorAll: function(selector, onResponse)
     {
+        this.query(selector, "querySelectorAll", onResponse);
+    },
+
+    querySelector: function(selector, onResponse)
+    {
+        this.query(selector, "querySelector", onResponse);
+    },
+
+    query: function(selector, type, onResponse)
+    {
         var self = this;
         var doQuery = function(callback)
         {
             var packet = {
                 to: self.actor,
-                type: "querySelectorAll",
+                type: type,
                 selector: selector
             };
 
