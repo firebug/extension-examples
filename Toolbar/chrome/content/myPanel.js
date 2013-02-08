@@ -73,7 +73,8 @@ MyPanel.prototype = FBL.extend(Firebug.Panel,
         items.push({
             nol10n: true,
             label: "Item 3",
-            command: FBL.bindFixed(this.onHello, this)
+            type: "checkbox",
+            checked: true,
         });
 
         return items;
@@ -86,19 +87,20 @@ MyPanel.prototype = FBL.extend(Firebug.Panel,
         items.push({
             nol10n: true,
             label: "Item 2-1",
-            command: FBL.bindFixed(this.onHello, this)
+            type: "radio",
         });
 
         items.push({
             nol10n: true,
             label: "Item 2-2",
-            command: FBL.bindFixed(this.onHello, this)
+            type: "radio",
         });
 
         items.push({
             nol10n: true,
             label: "Item 2-3",
-            command: FBL.bindFixed(this.onHello, this)
+            type: "radio",
+            checked: true,
         });
 
         return items;
