@@ -56,10 +56,13 @@ ElementActor.prototype = Obj.extend(ElementActor.prototype,
             });
         }
 
+        var localName = this.obj.tagName.toLowerCase();
+
         return {
             "type": "object",
             "class": "HTMLElement",
-            "localName": this.obj.tagName.toLowerCase(),
+            "localName": localName,
+            "nodeName": localName,
             "actor": this.actorID,
             "id": this.obj.id,
             "classList": classList,
