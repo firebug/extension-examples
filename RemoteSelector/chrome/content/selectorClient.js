@@ -3,8 +3,9 @@
 define([
     "firebug/lib/object",
     "firebug/lib/trace",
+    "remoteselector/elementClient",
 ],
-function(Obj, FBTrace) {
+function(Obj, FBTrace, ElementClient) {
 
 // ********************************************************************************************* //
 // Constants
@@ -14,10 +15,10 @@ FBTrace = FBTrace.to("DBG_REMOTESELECTOR");
 // ********************************************************************************************* //
 // Implementation
 
-function SelectorClient(debuggerClient, actor, threadClient)
+function SelectorClient(debuggerClient, actorId, threadClient)
 {
     this.debuggerClient = debuggerClient;
-    this.actor = actor;
+    this.actorId = actorId;
     this.threadClient = threadClient;
 }
 
@@ -30,12 +31,25 @@ SelectorClient.prototype =
 
     querySelectorAll: function(selector, onResponse)
     {
-        this.query(selector, "querySelectorAll", onResponse);
+        this.query(selector, "querySelectorAll", function (result)
+        {
+            var elements = [];
+            for (var i=0; i<result.length; i++)
+            {
+                var client = new ElementClient(this.debuggerClient, result[i]);
+                elements.push(client.getProxy());
+            }
+            onResponse(elements);
+        });
     },
 
     querySelector: function(selector, onResponse)
     {
-        this.query(selector, "querySelector", onResponse);
+        this.query(selector, "querySelector", function (result)
+        {
+            var client = new ElementClient(this.debuggerClient, result);
+            onResponse(client.getProxy());
+        });
     },
 
     query: function(selector, type, onResponse)
@@ -44,7 +58,7 @@ SelectorClient.prototype =
         var doQuery = function(callback)
         {
             var packet = {
-                to: self.actor,
+                to: self.actorId,
                 type: type,
                 selector: selector
             };

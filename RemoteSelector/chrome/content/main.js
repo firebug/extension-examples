@@ -7,8 +7,9 @@ define([
     "remoteselector/selectorCommand",
     "remoteselector/selectorActor",
     "remoteselector/selectorClient",
+    "remoteselector/elementClientRep",
 ],
-function(Firebug, FBTrace, SelectorModule, SelectorCommand, SelectorActor, SelectorClient) {
+function(Firebug, FBTrace) {
 
 // ********************************************************************************************* //
 // Constants

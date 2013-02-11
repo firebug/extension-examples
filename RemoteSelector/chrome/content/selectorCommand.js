@@ -1,10 +1,11 @@
 /* See license.txt for terms of usage */
 
 define([
+    "firebug/firebug",
     "firebug/lib/object",
     "firebug/lib/trace",
 ],
-function(Obj, FBTrace) {
+function(Firebug, Obj, FBTrace) {
 
 // ********************************************************************************************* //
 // Constants
