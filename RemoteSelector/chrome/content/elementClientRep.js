@@ -55,6 +55,7 @@ var ElementClientRep = domplate(Reps.Element,
             var tabActor = conn.rootActor._tabActors.get(client.context.browser);
             var pool = tabActor.threadActor.threadLifetimePool;
             var actor = pool.get(client.grip.actor);
+            //return actor.obj.unsafeDereference();
             return actor.obj;
         }
         catch (e)
