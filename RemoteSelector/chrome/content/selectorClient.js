@@ -15,11 +15,12 @@ FBTrace = FBTrace.to("DBG_REMOTESELECTOR");
 // ********************************************************************************************* //
 // Implementation
 
-function SelectorClient(debuggerClient, actorId, threadClient)
+function SelectorClient(debuggerClient, actorId, context)
 {
     this.debuggerClient = debuggerClient;
     this.actorId = actorId;
-    this.threadClient = threadClient;
+    this.context = context;
+    this.threadClient = context.activeThread;
 }
 
 SelectorClient.prototype =
@@ -31,12 +32,13 @@ SelectorClient.prototype =
 
     querySelectorAll: function(selector, onResponse)
     {
+        var self = this;
         this.query(selector, "querySelectorAll", function (result)
         {
             var elements = [];
             for (var i=0; i<result.length; i++)
             {
-                var client = new ElementClient(this.debuggerClient, result[i]);
+                var client = new ElementClient(result[i], self.context);
                 elements.push(client.getProxy());
             }
             onResponse(elements);
@@ -45,9 +47,10 @@ SelectorClient.prototype =
 
     querySelector: function(selector, onResponse)
     {
+        var self = this;
         this.query(selector, "querySelector", function (result)
         {
-            var client = new ElementClient(this.debuggerClient, result);
+            var client = new ElementClient(result, self.context);
             onResponse(client.getProxy());
         });
     },

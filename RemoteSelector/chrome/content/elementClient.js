@@ -19,11 +19,10 @@ var Cu = Components.utils;
 // ********************************************************************************************* //
 // Implementation
 
-function ElementClient(debuggerClient, grip, threadClient)
+function ElementClient(grip, context)
 {
-    this.debuggerClient = debuggerClient;
     this.grip = grip;
-    this.threadClient = threadClient;
+    this.context = context;
 
     var self = this;
 

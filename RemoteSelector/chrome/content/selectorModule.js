@@ -75,8 +75,7 @@ var SelectorModule = Obj.extend(Firebug.Module,
 
         // Create client object for communication with the server actor.
         var selectorActorId = DebuggerClientModule.getActorId(context, "SelectorActor");
-        context.selectorClient = new SelectorClient(client, selectorActorId,
-            context.activeThread);
+        context.selectorClient = new SelectorClient(client, selectorActorId, context);
 
         FBTrace.sysout("remoteSelector; SelectorModule.onThreadAttached; " +
             context.getName() + ", selector actor ID: " + selectorActorId);
