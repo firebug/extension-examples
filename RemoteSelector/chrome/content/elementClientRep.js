@@ -7,8 +7,9 @@ define([
     "firebug/lib/trace",
     "firebug/lib/domplate",
     "firebug/html/inspector",
+    "firebug/remoting/debuggerClientModule",
 ],
-function(Firebug, Reps, Obj, FBTrace, Domplate, Inspector) {
+function(Firebug, Reps, Obj, FBTrace, Domplate, Inspector, DebuggerClientModule) {
 with (Domplate) {
 
 // ********************************************************************************************* //
@@ -44,24 +45,10 @@ var ElementClientRep = domplate(Reps.Element,
 
     getRealObject: function(object)
     {
-        try
-        {
-            // xxxHonza: access server side objects, of course even hacks needs
-            // good architecure, refactor.
-            // First option: implement a provider used by UI widgets (e.g. DomTree)
-            // See: https://bugzilla.mozilla.org/show_bug.cgi?id=837723
-            var client = object.getClient();
-            var conn = DebuggerServer._connections["conn0."];
-            var tabActor = conn.rootActor._tabActors.get(client.context.browser);
-            var pool = tabActor.threadActor.threadLifetimePool;
-            var actor = pool.get(client.grip.actor);
-            //return actor.obj.unsafeDereference();
-            return actor.obj;
-        }
-        catch (e)
-        {
-            TraceError.sysout("elementClientRep.getRealObject; EXCEPTION " + e, e);
-        }
+        // Highilghter is not remotabel so, let's get local access to the underlying
+        // JS object. Notice that this breaks client-server concept.
+        var client = object.getClient();
+        return DebuggerClientModule.getObject(client.context, client.grip.actor);
     },
 });
 

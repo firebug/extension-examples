@@ -16,7 +16,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-Cu.import("resource:///modules/devtools/dbg-server.jsm");
+Cu["import"]("resource://gre/modules/devtools/dbg-server.jsm");
 
 // ********************************************************************************************* //
 // Implementation

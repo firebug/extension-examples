@@ -3,9 +3,9 @@
 define([
     "firebug/lib/object",
     "firebug/lib/trace",
-    "firebug/debugger/grips/objectGrip",
+    "firebug/debugger/clients/objectClient",
 ],
-function(Obj, FBTrace, ObjectGrip) {
+function(Obj, FBTrace, ObjectClient) {
 
 // ********************************************************************************************* //
 // Constants
@@ -31,7 +31,7 @@ function ElementClient(grip, context)
     this.grip.getClient = function() { return self; };
 }
 
-ElementClient.prototype = Object.create(ObjectGrip.prototype);
+ElementClient.prototype = Object.create(ObjectClient.prototype);
 ElementClient.prototype = Obj.extend(ElementClient.prototype,
 {
     actor: null,
