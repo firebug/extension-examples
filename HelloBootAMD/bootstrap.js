@@ -50,7 +50,7 @@ function isFirebugLoaded()
     {
     }
 
-    return true;
+    return false;
 }
 
 // ********************************************************************************************* //
@@ -64,11 +64,12 @@ function isFirebugLoaded()
  */
 function firebugStartup()
 {
-    // If Firebu isn't loade just bail out, Firebug will execute this method
+    // If Firebug isn't loaded just bail out, Firebug will execute this method
     // as soon as it loads.
     if (!isFirebugLoaded())
         return;
 
+    // At this point, Firebug is loaded and we can use its API.
     FirebugLoader.registerBootstrapScope(this);
 
     // Load default preferences
