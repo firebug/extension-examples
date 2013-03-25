@@ -48,6 +48,9 @@ function isFirebugLoaded()
     }
     catch (e)
     {
+        // Report the error only if you want to track cases where this extension
+        // is loaded before Firebug.
+        //Cu.reportError(e);
     }
 
     return false;
