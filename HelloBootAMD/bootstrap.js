@@ -27,7 +27,7 @@ function startup(data, reason)
     // 1) Firebug is already loaded - good, let's just execute firebugStartup() callback
     // that will ensure proper Firebug related initialization for this extension.
     // 2) Firebug is not loaded yet - as soon as Firebug is loaded it'll execute this
-    // method automatially.
+    // method automatically.
     firebugStartup();
 }
 
