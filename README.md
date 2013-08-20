@@ -165,12 +165,26 @@ Toolbar
 Bootstrapped extension that shows how to create (customize) a toolbar and toolbar buttons in
 Firebug without using XUL.
 
-*This example also demonstrate how to register/unregister all extension's components such as
+* This example also demonstrate how to register/unregister all extension's components such as
 panels, modules, listeners, string bundles, etc.) within main module*
 
 Related API:
     Firebug.chrome.appendToolbarButton();
     Firebug.Panel.getPanelToolbarButtons();
+
+Requirements:
+
+* Firebug 1.10+
+
+PanelSplitter
+-------------
+Bootstrapped Firebug extension showing how to implement a splitter within Firebug panel.
+
+* This example also demonstrate how to register/unregister components such as
+panels, string bundles and trace listener)
+
+Related API:
+    DragDrop.Tracker();
 
 Requirements:
 
