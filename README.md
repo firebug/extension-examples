@@ -184,6 +184,7 @@ Bootstrapped Firebug extension showing how to implement a splitter within Firebu
 panels, string bundles and trace listener)
 
 Related API:
+
     DragDrop.Tracker();
 
 Requirements:
