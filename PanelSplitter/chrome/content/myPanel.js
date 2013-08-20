@@ -6,12 +6,9 @@ define([
     "firebug/lib/locale",
     "firebug/lib/domplate",
     "firebug/lib/dom",
-    "firebug/lib/http",
-    "firebug/lib/wrapper",
-    "firebug/lib/array",
     "firebug/lib/dragdrop",
 ],
-function(Obj, FBTrace, Locale, Domplate, Dom, Http, Wrapper, Arr, DragDrop) {
+function(Obj, FBTrace, Locale, Domplate, Dom, DragDrop) {
 
 "use strict";
 
