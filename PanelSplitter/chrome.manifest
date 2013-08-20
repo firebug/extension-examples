@@ -1,0 +1,3 @@
+content  panelsplitter chrome/content/
+skin     panelsplitter classic/1.0   chrome/skin/classic/
+locale   panelsplitter en-US         chrome/locale/en-US/
