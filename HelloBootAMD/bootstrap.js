@@ -134,8 +134,7 @@ function firebugFrameLoad(Firebug)
         "chrome://hellobootamd/skin/hellobootamd.css");
 
     // The registration process will automatically look for 'main' module and load it.
-    // The is the same what happens in a XUL overlay applied on:
-    // chrome://firebug/content/firebugOverlay.xul
+    // The is the same what happens in a XUL overlay (see HelloAMD example, mainOverlay.xul & .js)
     var config = {id: "hellobootamd@janodvarko.cz"};
     Firebug.registerExtension("hellobootamd", config);
 }

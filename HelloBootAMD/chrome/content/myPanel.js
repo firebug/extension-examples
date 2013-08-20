@@ -13,8 +13,8 @@ function(Obj, FBTrace, Locale, Domplate) {
 
 var panelName = "hellobootamd";
 
-Firebug.MyPanel = function MyPanel() {};
-Firebug.MyPanel.prototype = Obj.extend(Firebug.Panel,
+function MyPanel() {};
+MyPanel.prototype = Obj.extend(Firebug.Panel,
 {
     name: panelName,
     title: "Hello Boot AMD!",
@@ -66,13 +66,14 @@ Firebug.MyPanel.prototype = Obj.extend(Firebug.Panel,
 // Register locales before the following template definition.
 Firebug.registerStringBundle("chrome://hellobootamd/locale/hellobootamd.properties");
 
+var {domplate, SPAN} = Domplate;
+
 /**
  * Domplate template used to render panel's content. Note that the template uses
  * localized strings and so, Firebug.registerStringBundle for the appropriate
  * locale file must be already executed at this moment.
  */
-with (Domplate) {
-Firebug.MyPanel.prototype.MyTemplate = domplate(
+MyPanel.prototype.MyTemplate = domplate(
 {
     tag:
         SPAN(
@@ -83,18 +84,18 @@ Firebug.MyPanel.prototype.MyTemplate = domplate(
     {
         this.tag.replace({}, parentNode);
     }
-})}
+});
 
 // ********************************************************************************************* //
 // Registration
 
-Firebug.registerPanel(Firebug.MyPanel);
+Firebug.registerPanel(MyPanel);
 Firebug.registerStylesheet("chrome://hellobootamd/skin/hellobootamd.css");
 
 if (FBTrace.DBG_HELLOBOOTAMD)
     FBTrace.sysout("helloBootAMD; myPanel.js, stylesheet registered");
 
-return Firebug.MyPanel;
+return MyPanel;
 
 // ********************************************************************************************* //
 });

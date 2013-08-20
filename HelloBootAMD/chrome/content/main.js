@@ -35,8 +35,8 @@ var theApp =
             FBTrace.sysout("helloBootAMD; HelloBootAMD extension shutdown");
 
         // Unregister all registered Firebug components
-        Firebug.unregisterPanel(Firebug.MyPanel);
-        Firebug.unregisterModule(Firebug.MyModule);
+        Firebug.unregisterPanel(MyPanel);
+        Firebug.unregisterModule(MyModule);
         Firebug.unregisterStylesheet("chrome://hellobootamd/skin/hellobootamd.css");
         Firebug.unregisterStringBundle("chrome://hellobootamd/locale/hellobootamd.properties");
 

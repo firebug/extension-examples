@@ -9,7 +9,7 @@ function(Obj, FBTrace) {
 // ********************************************************************************************* //
 // Custom Module Implementation
 
-Firebug.MyModule = Obj.extend(Firebug.Module,
+var MyModule = Obj.extend(Firebug.Module,
 {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Initialization
@@ -36,9 +36,9 @@ Firebug.MyModule = Obj.extend(Firebug.Module,
 // ********************************************************************************************* //
 // Registration
 
-Firebug.registerModule(Firebug.MyModule);
+Firebug.registerModule(MyModule);
 
-return Firebug.MyModule;
+return MyModule;
 
 // ********************************************************************************************* //
 });
