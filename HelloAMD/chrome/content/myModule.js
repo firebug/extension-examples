@@ -1,15 +1,15 @@
 /* See license.txt for terms of usage */
 
 define([
-    "firebug/lib/lib",
+    "firebug/lib/object",
     "firebug/lib/trace",
 ],
-function(FBL, FBTrace) {
+function(Obj, FBTrace) {
 
 // ********************************************************************************************* //
 // Custom Module Implementation
 
-Firebug.MyModule = FBL.extend(Firebug.Module,
+var MyModule = Obj.extend(Firebug.Module,
 {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Initialization
@@ -36,9 +36,9 @@ Firebug.MyModule = FBL.extend(Firebug.Module,
 // ********************************************************************************************* //
 // Registration
 
-Firebug.registerModule(Firebug.MyModule);
+Firebug.registerModule(MyModule);
 
-return Firebug.MyModule;
+return MyModule;
 
 // ********************************************************************************************* //
 });
