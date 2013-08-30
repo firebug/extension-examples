@@ -6,7 +6,7 @@ define([
     "dynamicpaneltitle/mySidePanel",
     "dynamicpaneltitle/myModule",
 ],
-function(FBTrace, MyPanel, MyModule) {
+function(FBTrace, MyPanel, MySidePanel, MyModule) {
 
 // ********************************************************************************************* //
 // The Application Object
