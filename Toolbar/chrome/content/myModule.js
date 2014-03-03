@@ -19,7 +19,7 @@ Firebug.MyModule = FBL.extend(Firebug.Module,
         Firebug.Module.initialize.apply(this, arguments);
 
         // The main Firebug toolbar can't be extended from a panel object since it's
-        // crated as soon as the panel is actualy selected by the use (which doesn't
+        // created as soon as the panel is actually selected by the use (which doesn't
         // have to even happen). That's why we are creating the button here, in a module.
         this.buttons = [];
         this.buttons.push("-");
