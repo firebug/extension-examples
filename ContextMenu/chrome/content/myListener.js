@@ -23,8 +23,6 @@ var MyListener =
 
         var item = {
             id: "myId",
-            type : "checkbox",
-            checked : true,
             label : "My Menu Item",
             command: this.onHello.bind(this, object)
         };
@@ -38,7 +36,11 @@ var MyListener =
 
     onHello: function(object)
     {
-        alert("Clicked object: " + object);
+        // Log into Firebug's Console panel
+        Firebug.Console.log("Hello! " + object);
+
+        // Log into the (debugging) tracing console.
+        FBTrace.sysout("myListener.onHello;", object);
     }
 };
 
