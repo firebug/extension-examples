@@ -1,10 +1,11 @@
 /* See license.txt for terms of usage */
 
 define([
+    "firebug/firebug",
     "firebug/lib/trace",
     "contextmenu/myListener",
 ],
-function(FBTrace, MyListener) {
+function(Firebug, FBTrace, MyListener) {
 
 // ********************************************************************************************* //
 // The application object
