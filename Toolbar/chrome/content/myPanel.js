@@ -51,6 +51,12 @@ MyPanel.prototype = FBL.extend(Firebug.Panel,
             items: this.getMenuButtonItems()
         });
 
+        buttons.push({
+            label: "toolbar.button.label3",
+            type: "checkbox",
+            tooltiptext: "toolbar.button.tooltip3",
+        });
+
         return buttons;
     },
 
