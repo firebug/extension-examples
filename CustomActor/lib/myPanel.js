@@ -12,7 +12,7 @@ const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client
 const { defer } = require("sdk/core/promise");
 
 // xxxHonza: How to make sure the client object is instanciated?
-const { MyActorClient } = require("./myActor.js");
+const { MyActorFront } = require("./myActor.js");
 
 
 const MyPanel = Class({
@@ -59,22 +59,16 @@ const MyPanel = Class({
       onClosed: () => Trace.sysout("CLOSE")
     };
 
-    let client = this.client = new DebuggerClient(transport);
+    let client = new DebuggerClient(transport);
     client.connect((aType, aTraits) => {
-      // Get list of tabs
       client.listTabs(response => {
-        // Attach to the current tab
-        let tabActor = response.tabs[response.selected];
-        client.attachTab(tabActor, (response, tabClient) => {
-          // Send attach packet
-          let attach = { to: response.from.myActor, type: "attach" };
-          client.request(attach).then(response => {
-            // Send hello packet
-            let hello = { to: response.from, type: "hello" };
-            client.request(hello).then(response => {
-              Trace.sysout("!!! " + response.msg, response);
-            });
-          });
+        let form = response.tabs[response.selected];
+        let myActor = MyActorFront(client, form);
+
+        myActor.attach().then(() => {
+          myActor.hello().then(response => {
+            Trace.sysout("!!! " + response.msg, response);
+          })
         });
       });
     });

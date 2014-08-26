@@ -126,11 +126,11 @@ let MyActor = protocol.ActorClass({
 
 exports.MyActor = MyActor;
 
-exports.MyActorClient = protocol.FrontClass(MyActor, {
+exports.MyActorFront = protocol.FrontClass(MyActor, {
   initialize: function(client, form) {
     protocol.Front.prototype.initialize.call(this, client, form);
 
-    Trace.sysout("myActorClient.initialize;", arguments);
+    Trace.sysout("myActorFront.initialize;", arguments);
 
     this.actorID = form.myActor;
     this.manage(this);
@@ -146,3 +146,4 @@ exports.unregister = function(handle) {
   //handle.removeGlobalActor(MyActor, "myActor");
   handle.removeTabActor(MyActor, "myActor");
 };
+
