@@ -9,9 +9,11 @@ const { Class } = require("sdk/core/heritage");
 const { Trace, TraceError } = require("./trace.js");
 const { MessagePort, MessageChannel } = require("sdk/messaging");
 const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client.jsm", {});
+const { defer } = require("sdk/core/promise");
+
+// xxxHonza: How to make sure the client object is instanciated?
 const { MyActorClient } = require("./myActor.js");
 
-const { defer } = require("sdk/core/promise");
 
 const MyPanel = Class({
   extends: Panel,
@@ -47,10 +49,14 @@ const MyPanel = Class({
     this.debuggee.start();
 
     // Create debugger client
+    // xxxHonza: HACK, the original Debuggee implementation doesn't
+    // expose the transport protocol.
     let transport = this.debuggee.transport;
 
+    // xxxHonza: this breaks communication to the frame content scope.
     transport.hooks = {
-      onPacket: packet => Trace.sysout("RECEIVED " + packet, packet)
+      onPacket: packet => Trace.sysout("RECEIVED " + packet, packet),
+      onClosed: () => Trace.sysout("CLOSE")
     };
 
     let client = this.client = new DebuggerClient(transport);
