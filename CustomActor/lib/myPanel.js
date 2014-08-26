@@ -52,13 +52,6 @@ const MyPanel = Class({
     // xxxHonza: HACK, the original Debuggee implementation doesn't
     // expose the transport protocol.
     let transport = this.debuggee.transport;
-
-    // xxxHonza: this breaks communication to the frame content scope.
-    transport.hooks = {
-      onPacket: packet => Trace.sysout("RECEIVED " + packet, packet),
-      onClosed: () => Trace.sysout("CLOSE")
-    };
-
     let client = new DebuggerClient(transport);
     client.connect((aType, aTraits) => {
       client.listTabs(response => {
