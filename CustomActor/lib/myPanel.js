@@ -10,10 +10,7 @@ const { Trace, TraceError } = require("./trace.js");
 const { MessagePort, MessageChannel } = require("sdk/messaging");
 const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client.jsm", {});
 const { defer } = require("sdk/core/promise");
-
-// xxxHonza: How to make sure the client object is instanciated?
 const { MyActorFront } = require("./myActor.js");
-
 
 const MyPanel = Class({
   extends: Panel,
@@ -48,15 +45,20 @@ const MyPanel = Class({
     this.content.start();
     this.debuggee.start();
 
-    // Create debugger client
+    // Pass channels to the panel content scope (myPanelContent.js).
+    // The content scope can send messages back to the chrome or
+    // directly to the debugger server.
+    this.postMessage("initialize", [this.debuggee, port2]);
+
+    // Get access to our custom actor {@MyActor}.
     // xxxHonza: HACK, the original Debuggee implementation doesn't
     // expose the transport protocol.
     let transport = this.debuggee.transport;
     let client = new DebuggerClient(transport);
     client.connect((aType, aTraits) => {
       client.listTabs(response => {
-        let form = response.tabs[response.selected];
-        let myActor = MyActorFront(client, form);
+        let tab = response.tabs[response.selected];
+        let myActor = MyActorFront(client, tab);
 
         myActor.attach().then(() => {
           myActor.hello().then(response => {
@@ -65,9 +67,6 @@ const MyPanel = Class({
         });
       });
     });
-
-    // Pass channels to the panel content scope (frame).
-    //this.postMessage("connect", [this.debuggee, port2]);
   },
 
   onContentMessage: function(event) {
