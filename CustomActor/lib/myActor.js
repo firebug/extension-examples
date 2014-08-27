@@ -3,7 +3,7 @@
 "use strict";
 
 const { Cc, Ci, Cu } = require("chrome");
-const { Trace, TraceError } = require("./trace.js");
+const { Trace } = require("./trace.js");
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 const { ToolSidebar } = devtools["require"]("devtools/framework/sidebar");
 

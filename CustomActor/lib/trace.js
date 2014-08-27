@@ -6,7 +6,7 @@
 
 const { Cu } = require("chrome");
 
-var FBTrace = {
+var Trace = {
   sysout: function(msg, object) {
     console.log(msg, object);
   }
@@ -14,12 +14,12 @@ var FBTrace = {
 
 try {
   // Use Tracing Console extension for logging if available.
+  // https://github.com/firebug/tracing-console
   var scope = {};
   Cu["import"]("resource://fbtrace/firebug-trace-service.js", scope);
-  FBTrace = scope.traceConsoleService.getTracer("extensions.firebug");
+  Trace = scope.traceConsoleService.getTracer("extensions.firebug");
 }
 catch(err) {
 }
 
-exports.Trace = FBTrace;
-exports.TraceError = FBTrace;
+exports.Trace = Trace;

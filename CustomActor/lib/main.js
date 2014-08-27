@@ -5,7 +5,7 @@
 var self = require("sdk/self");
 
 const { Cu, Ci } = require("chrome");
-const { Trace, TraceError } = require("./trace.js");
+const { Trace } = require("./trace.js");
 const { MyPanel } = require("./myPanel.js");
 const { DebuggerServer } = Cu.import("resource://gre/modules/devtools/dbg-server.jsm", {});
 

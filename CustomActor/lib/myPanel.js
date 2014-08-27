@@ -6,7 +6,7 @@ const { Cu } = require("chrome");
 const { Panel } = require("dev/panel");
 const { Tool } = require("dev/toolbox");
 const { Class } = require("sdk/core/heritage");
-const { Trace, TraceError } = require("./trace.js");
+const { Trace } = require("./trace.js");
 const { MessagePort, MessageChannel } = require("sdk/messaging");
 const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client.jsm", {});
 const { defer } = require("sdk/core/promise");
@@ -50,11 +50,15 @@ const MyPanel = Class({
     // directly to the debugger server.
     this.postMessage("initialize", [this.debuggee, port2]);
 
+    // Connect to our custom actor {@MyActor}.
+    this.connect();
+  },
+
+  connect: function() {
     // Get access to our custom actor {@MyActor}.
     // xxxHonza: HACK, the original Debuggee implementation doesn't
     // expose the transport protocol.
-    let transport = this.debuggee.transport;
-    let client = new DebuggerClient(transport);
+    let client = new DebuggerClient(this.debuggee.transport);
     client.connect((aType, aTraits) => {
       client.listTabs(response => {
         let tab = response.tabs[response.selected];
@@ -62,7 +66,11 @@ const MyPanel = Class({
 
         myActor.attach().then(() => {
           myActor.hello().then(response => {
-            Trace.sysout("!!! " + response.msg, response);
+            Trace.sysout("myPanel.connect; (from myActor): " +
+              response.msg, response);
+
+            // Forward the hello message to the content scope.
+            this.content.postMessage(response);
           })
         });
       });
@@ -70,7 +78,8 @@ const MyPanel = Class({
   },
 
   onContentMessage: function(event) {
-    Trace.sysout("myPanel.onMessage; (from content)", event);
+    Trace.sysout("myPanel.onMessage; (from content): " +
+      event.data.content, event);
   },
 
   onLoad: function() {
