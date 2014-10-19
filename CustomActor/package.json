@@ -1,9 +1,10 @@
 {
   "name": "customactor",
   "title": "CustomActor",
-  "id": "jid1-3Bk07jHa4WpfBQ",
+  "id": "customactor@getfirebug.com",
   "description": "a basic add-on",
   "author": "",
   "license": "MPL 2.0",
-  "version": "0.1"
+  "version": "0.1.0",
+  "main": "lib/main"
 }

@@ -11,6 +11,10 @@ const { MessagePort, MessageChannel } = require("sdk/messaging");
 const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client.jsm", {});
 const { defer } = require("sdk/core/promise");
 const { MyActorFront } = require("./myActor.js");
+const { viewFor } = require("sdk/view/core");
+
+const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
+const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 
 const MyPanel = Class({
   extends: Panel,
@@ -23,6 +27,10 @@ const MyPanel = Class({
   setup: function({debuggee}) {
     Trace.sysout("myPanel.setup", arguments);
 
+    let frame = viewFor(this);
+    let parentWin = frame.ownerDocument.defaultView;
+
+    this.toolbox = getToolbox(parentWin);
     this.debuggee = debuggee;
   },
 
@@ -56,11 +64,14 @@ const MyPanel = Class({
 
   connect: function() {
     // Get access to our custom actor {@MyActor}.
-    // xxxHonza: HACK, the original Debuggee implementation doesn't
-    // expose the transport protocol.
-    let client = new DebuggerClient(this.debuggee.transport);
-    client.connect((aType, aTraits) => {
+    let target = this.toolbox.target;
+    target.activeTab.attachThread({}, (response, threadClient) => {
+      Trace.sysout("myPanel.attach; threadClient", arguments);
+
+      let client = threadClient.client;
       client.listTabs(response => {
+        Trace.sysout("myPanel.attach; list of tabs", arguments);
+
         let tab = response.tabs[response.selected];
         let myActor = MyActorFront(client, tab);
 
@@ -86,6 +97,27 @@ const MyPanel = Class({
     Trace.sysout("myPanel.onLoad;");
   }
 });
+
+function getToolbox(win) {
+  let tab = getCurrentTab(win);
+  if (tab) {
+    let target = devtools.TargetFactory.forTab(tab);
+    return gDevTools.getToolbox(target);
+  }
+}
+
+function getCurrentTab(win) {
+  if (win) {
+    let browserDoc = win.top.document;
+    let browser = browserDoc.getElementById("content");
+    return browser.selectedTab;
+  }
+
+  // xxxHonza: do we really want this fall-back?
+  let browser = getMostRecentBrowserWindow();
+  if (browser)
+    return browser.gBrowser.mCurrentTab;
+}
 
 const myTool = new Tool({
   panels: { myPanel: MyPanel }

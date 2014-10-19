@@ -12,7 +12,11 @@ const { DebuggerServer } = Cu.import("resource://gre/modules/devtools/dbg-server
 function main(options, callbacks) {
   Trace.sysout("main.js;", options);
 
-  DebuggerServer.registerModule(self.data.url("../lib/myActor.js"));
+  DebuggerServer.registerModule(self.data.url("../lib/myActor.js"), {
+    prefix: "myactor",
+    constructor: "MyActor",
+    type: { tab: true }
+  });
 }
 
 function onUnload(reason) {

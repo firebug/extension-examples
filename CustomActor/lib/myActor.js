@@ -132,18 +132,7 @@ exports.MyActorFront = protocol.FrontClass(MyActor, {
 
     Trace.sysout("myActorFront.initialize;", arguments);
 
-    this.actorID = form.myActor;
+    this.actorID = form.myactorActor;
     this.manage(this);
   }
 });
-
-exports.register = function(handle) {
-  //handle.addGlobalActor(MyActor, "myActor");
-  handle.addTabActor(MyActor, "myActor");
-};
-
-exports.unregister = function(handle) {
-  //handle.removeGlobalActor(MyActor, "myActor");
-  handle.removeTabActor(MyActor, "myActor");
-};
-
